@@ -1,0 +1,16 @@
+{
+    "name": "Project.Presentation",
+    "rootNamespace": "Project.Presentation",
+    "references": [
+        "GUID:43974e5d1636d4ef587c519ebfd5a165"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
