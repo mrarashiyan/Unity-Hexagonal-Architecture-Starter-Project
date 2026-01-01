@@ -2,7 +2,10 @@
     "name": "Project.Presentation",
     "rootNamespace": "Project.Presentation",
     "references": [
-        "GUID:43974e5d1636d4ef587c519ebfd5a165"
+        "GUID:43974e5d1636d4ef587c519ebfd5a165",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:0d74d9f250ba24d70aebe8b654b63106",
+        "GUID:939d9c727c3a74144934846e3ebef22d"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

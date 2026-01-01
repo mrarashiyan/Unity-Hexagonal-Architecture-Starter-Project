@@ -32,7 +32,7 @@ namespace Project.Bootstrap
             
             m_ServiceInstaller.Install().Forget();
             
-            await UniTask.WaitWhile(() => m_ServiceInstaller.InitializeStatus != InitializeStatus.Succeeded);
+            await UniTask.WaitWhile(() => m_ServiceInstaller.InstallStatus != InstallStatus.Succeeded);
             Debug.Log($"[{nameof(GameInstaller)}] Install Finished)");
         }
 

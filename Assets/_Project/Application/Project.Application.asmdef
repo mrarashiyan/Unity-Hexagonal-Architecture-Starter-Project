@@ -2,7 +2,8 @@
     "name": "Project.Application",
     "rootNamespace": "Project.Application",
     "references": [
-        "GUID:0d74d9f250ba24d70aebe8b654b63106"
+        "GUID:0d74d9f250ba24d70aebe8b654b63106",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

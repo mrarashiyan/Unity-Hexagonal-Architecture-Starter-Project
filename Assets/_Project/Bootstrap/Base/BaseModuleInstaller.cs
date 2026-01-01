@@ -12,26 +12,30 @@ namespace Project.Bootstrap.Base
         /// Initialize TimeOut in seconds
         /// </summary>
         protected int InitializeTimeout = 5;
-        public InitializeStatus InitializeStatus { get; protected set; }
+        public InstallStatus InstallStatus { get; protected set; }
 
-        public async UniTask<InitializeStatus> Initialize()
+        public async UniTask<InstallStatus> Initialize()
         {
             var cts = new CancellationTokenSource();
             cts.CancelAfter(InitializeTimeout);
 
-            InitializeStatus = InitializeStatus.InProgress;
+            InstallStatus = InstallStatus.InProgress;
             try
             {
                 await InitializeModule();
-                InitializeStatus = InitializeStatus.Succeeded;
+                InstallStatus = InstallStatus.Succeeded;
             }
             catch (Exception e)
             {
                 Debug.LogError($"[ModuleInstallerFailed] Exception={e.Message}");
-                InitializeStatus = InitializeStatus.Failed;
+                
+                if(e is TimeoutException)
+                    InstallStatus = InstallStatus.TimedOut;
+                else
+                    InstallStatus = InstallStatus.Failed;
             }
             
-            return InitializeStatus;
+            return InstallStatus;
         }
         
         

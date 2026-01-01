@@ -1,6 +1,6 @@
 namespace Project.Bootstrap.Enums
 {
-    public enum InitializeStatus
+    public enum InstallStatus
     {
         NotStarted = 1,
         InProgress = 2,
