@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: ServicesInstallLocator
   m_EditorClassIdentifier: Project.Config::Project.Config.Installer.ServicesInstallLocator
   DummyInstaller: {fileID: 5668424074873064538, guid: ba6d1da55426a46c9a299066e6a7369d, type: 3}
+  LocalStorage: {fileID: 6973313787157742487, guid: 9c01a2bd067b049248ca8ec96dd0fef4, type: 3}
