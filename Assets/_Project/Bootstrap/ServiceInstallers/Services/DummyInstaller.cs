@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Project.Bootstrap.ServiceInstallers
 {
-    public class DummyInstaller : BaseModuleInstaller
+    public class DummyInstaller : BaseServiceInstaller
     {
         [SerializeField] private bool m_SimulateException;
         protected override async UniTask InitializeModule()

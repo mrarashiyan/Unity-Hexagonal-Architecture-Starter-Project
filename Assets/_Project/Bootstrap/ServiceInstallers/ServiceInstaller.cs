@@ -26,7 +26,7 @@ namespace Project.Bootstrap.ServiceInstallers
         public InstallStatus InstallStatus { get; private set; }
         public Action<float> OnProgress;
 
-        private List<BaseModuleInstaller> _bootsProcessing = new();
+        private List<BaseServiceInstaller> _bootsProcessing = new();
 
         [SerializeField] private ServicesInstallLocator m_ServicesInstallLocator;
 
@@ -59,7 +59,7 @@ namespace Project.Bootstrap.ServiceInstallers
             var serviceGo = await InstantiateAsync(servicePrefab, transform);
             var bootProcess = serviceGo.FirstOrDefault();
 
-            _bootsProcessing.Add(bootProcess.GetComponent<BaseModuleInstaller>());
+            _bootsProcessing.Add(bootProcess.GetComponent<BaseServiceInstaller>());
 
             return bootProcess.GetComponent<T>();
         }

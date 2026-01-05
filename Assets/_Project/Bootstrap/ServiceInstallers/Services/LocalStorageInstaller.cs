@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Project.Bootstrap.ServiceInstallers
 {
-    public class LocalStorageInstaller : BaseModuleInstaller
+    public class LocalStorageInstaller : BaseServiceInstaller
     {
         [SerializeField] private LocalStorage m_LocalStorage;
         

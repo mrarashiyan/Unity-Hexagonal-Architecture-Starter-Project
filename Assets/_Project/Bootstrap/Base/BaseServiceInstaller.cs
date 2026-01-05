@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Project.Bootstrap.Base
 {
-    public abstract class BaseModuleInstaller : MonoBehaviour
+    public abstract class BaseServiceInstaller : MonoBehaviour
     {
 
         public bool TimeoutCanBlockBoot { get; private set; }
@@ -17,7 +17,7 @@ namespace Project.Bootstrap.Base
         
         public async UniTask<InstallStatus> Initialize(IEventBus eventBus, int timeout = 5, bool timeoutCanBlockBoot = false)
         {
-            Debug.Log($"[{nameof(BaseModuleInstaller)}] Initialize: Started");
+            Debug.Log($"[{nameof(BaseServiceInstaller)}] Initialize: Started");
             _eventBus = eventBus;
             TimeoutCanBlockBoot = timeoutCanBlockBoot;
             
@@ -41,7 +41,7 @@ namespace Project.Bootstrap.Base
                         InstallStatus = InstallStatus.Failed;
             }
             
-            Debug.Log($"[{nameof(BaseModuleInstaller)}] Initialize: Finished - Result: {InstallStatus}");
+            Debug.Log($"[{nameof(BaseServiceInstaller)}] Initialize: Finished - Result: {InstallStatus}");
             return InstallStatus;
         }
         

@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 namespace Project.Bootstrap.ServiceInstallers
 {
-    public class TimeInstaller : BaseModuleInstaller
+    public class TimeInstaller : BaseServiceInstaller
     {
         [SerializeField] private GameTime m_GameTime;
         
