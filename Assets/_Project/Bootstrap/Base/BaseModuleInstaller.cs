@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Project.Application;
 using Project.Bootstrap.Enums;
 using UnityEngine;
 
@@ -12,8 +13,12 @@ namespace Project.Bootstrap.Base
         public bool TimeoutCanBlockBoot { get; private set; }
         public InstallStatus InstallStatus { get; protected set; }
 
-        public async UniTask<InstallStatus> Initialize(int timeout = 5, bool timeoutCanBlockBoot = false)
+        protected IEventBus _eventBus;
+        
+        public async UniTask<InstallStatus> Initialize(IEventBus eventBus, int timeout = 5, bool timeoutCanBlockBoot = false)
         {
+            Debug.Log($"[{nameof(BaseModuleInstaller)}] Initialize: Started");
+            _eventBus = eventBus;
             TimeoutCanBlockBoot = timeoutCanBlockBoot;
             
             var cts = new CancellationTokenSource();
@@ -36,6 +41,7 @@ namespace Project.Bootstrap.Base
                         InstallStatus = InstallStatus.Failed;
             }
             
+            Debug.Log($"[{nameof(BaseModuleInstaller)}] Initialize: Finished - Result: {InstallStatus}");
             return InstallStatus;
         }
         

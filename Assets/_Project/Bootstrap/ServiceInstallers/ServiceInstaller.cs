@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Project.Application;
 using Project.Application.Ports;
 using Project.Application.Ports.Persistance.LocalStorage.Interface;
 using Project.Bootstrap.Base;
@@ -23,7 +24,7 @@ namespace Project.Bootstrap.ServiceInstallers
 
         [SerializeField] private ServicesInstallLocator m_ServicesInstallLocator;
 
-        public async UniTask<InstallStatus> Install()
+        public async UniTask<InstallStatus> Install(IEventBus eventBus)
         {
             ReportProgress(0);
             InstallStatus = InstallStatus.InProgress;
@@ -37,9 +38,9 @@ namespace Project.Bootstrap.ServiceInstallers
 
 
             //initialize all services
-            dummyService.Initialize().Forget();
-            localStorageService.Initialize().Forget();
-            gameTime.Initialize().Forget();
+            dummyService.Initialize(eventBus).Forget();
+            localStorageService.Initialize(eventBus).Forget();
+            gameTime.Initialize(eventBus).Forget();
 
             ReportProgress(100);
             

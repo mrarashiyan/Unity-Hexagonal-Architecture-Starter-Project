@@ -1,5 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
+using Project.Application;
+using Project.Application.EventBus;
 using Project.Bootstrap.Enums;
 using Project.Bootstrap.ServiceInstallers;
 using UnityEngine;
@@ -15,6 +17,8 @@ namespace Project.Bootstrap
         [SerializeField] private GameObject m_LoadingCanvas;
         [SerializeField] private Slider m_ProgressSlider;
 
+        private IEventBus _eventBus;
+        
         private void OnEnable()
         {
             m_ServiceInstaller.OnProgress += SetProgress;
@@ -30,7 +34,9 @@ namespace Project.Bootstrap
         {
             Debug.Log($"[{nameof(GameInstaller)}] Install Started)");
             
-            m_ServiceInstaller.Install().Forget();
+            _eventBus = new EventBus();
+            
+            m_ServiceInstaller.Install(_eventBus).Forget();
             
             await UniTask.WaitWhile(() => m_ServiceInstaller.InstallStatus != InstallStatus.Succeeded);
             Debug.Log($"[{nameof(GameInstaller)}] Install Finished)");
