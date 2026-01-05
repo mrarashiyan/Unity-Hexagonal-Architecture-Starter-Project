@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using Project.Application;
 using Project.Application.Ports;
 using Project.Application.Ports.Persistance.LocalStorage.Interface;
+using Project.Application.Ports.ServiceLocator;
 using Project.Bootstrap.Base;
 using Project.Bootstrap.Enums;
 using Project.Config.Installer;
@@ -12,10 +13,15 @@ using UnityEngine;
 
 namespace Project.Bootstrap.ServiceInstallers
 {
-    public class ServiceInstaller : MonoBehaviour
+    public class ServiceInstaller : MonoBehaviour, IServiceLocator
     {
-        public ILocalStorage LocalStorage { get; private set; }
-        public IGameTime GameTime { get; private set; }
+        #region Services
+
+        public ILocalStorage LocalStorage { get; }
+        public IGameTime GameTime { get; }
+
+        #endregion
+
 
         public InstallStatus InstallStatus { get; private set; }
         public Action<float> OnProgress;
@@ -43,7 +49,7 @@ namespace Project.Bootstrap.ServiceInstallers
             gameTime.Initialize(eventBus).Forget();
 
             ReportProgress(100);
-            
+
             var result = await WaitForFinishingBoot();
             return result ? InstallStatus.Succeeded : InstallStatus.Failed;
         }
@@ -64,8 +70,9 @@ namespace Project.Bootstrap.ServiceInstallers
             {
                 await UniTask.WaitUntil(() => bootProcess.InstallStatus != InstallStatus.InProgress);
 
-                return bootProcess.InstallStatus == InstallStatus.Succeeded || 
-                       (bootProcess.TimeoutCanBlockBoot == false && bootProcess.InstallStatus == InstallStatus.TimedOut);
+                return bootProcess.InstallStatus == InstallStatus.Succeeded ||
+                       (bootProcess.TimeoutCanBlockBoot == false &&
+                        bootProcess.InstallStatus == InstallStatus.TimedOut);
             }
 
             return true;
