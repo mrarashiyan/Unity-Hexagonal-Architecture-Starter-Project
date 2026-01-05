@@ -7,5 +7,6 @@ namespace Project.Config.Installer
     {
         public GameObject DummyInstaller;
         public GameObject LocalStorage;
+        public GameObject TimeInstaller;
     }
 }

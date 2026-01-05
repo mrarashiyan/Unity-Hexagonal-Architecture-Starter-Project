@@ -8,16 +8,16 @@ namespace Project.Bootstrap.Base
 {
     public abstract class BaseModuleInstaller : MonoBehaviour
     {
-        /// <summary>
-        /// Initialize TimeOut in seconds
-        /// </summary>
-        protected int InitializeTimeout = 5;
+
+        public bool TimeoutCanBlockBoot { get; private set; }
         public InstallStatus InstallStatus { get; protected set; }
 
-        public async UniTask<InstallStatus> Initialize()
+        public async UniTask<InstallStatus> Initialize(int timeout = 5, bool timeoutCanBlockBoot = false)
         {
+            TimeoutCanBlockBoot = timeoutCanBlockBoot;
+            
             var cts = new CancellationTokenSource();
-            cts.CancelAfter(InitializeTimeout);
+            cts.CancelAfter(timeout);
 
             InstallStatus = InstallStatus.InProgress;
             try
@@ -27,12 +27,13 @@ namespace Project.Bootstrap.Base
             }
             catch (Exception e)
             {
-                Debug.LogError($"[ModuleInstallerFailed] Exception={e.Message}");
+                Debug.LogError($"[{GetType().Name}] Exception={e.Message}");
                 
                 if(e is TimeoutException)
-                    InstallStatus = InstallStatus.TimedOut;
-                else
-                    InstallStatus = InstallStatus.Failed;
+                    if(timeoutCanBlockBoot == false)
+                        InstallStatus = InstallStatus.TimedOut;
+                    else
+                        InstallStatus = InstallStatus.Failed;
             }
             
             return InstallStatus;
