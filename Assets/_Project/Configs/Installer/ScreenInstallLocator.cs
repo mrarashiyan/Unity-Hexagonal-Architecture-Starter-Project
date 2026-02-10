@@ -6,5 +6,6 @@ namespace Project.Config.Installer
     public class ScreenInstallLocator : ScriptableObject
     {
         public GameObject DummyScreen;
+        public GameObject HomeScreen;
     }
 }

@@ -18,14 +18,16 @@ namespace Project.Bootstrap.ServiceInstallers
         public InstallStatus InstallStatus { get; private set; }
         public Action<float> OnProgress;
 
-        private List<IServiceInstaller> _bootsProcessing = new();
-
         [SerializeField] private ServicesInstallLocator m_ServicesInstallLocator;
-
+        private List<IServiceInstaller> _bootsProcessing = new();
+        private Transform _serviceParent;
+        
         public async UniTask<InstallStatus> Install(IEventBus eventBus, IServiceLocator serviceLocator)
         {
             ReportProgress(0);
             InstallStatus = InstallStatus.InProgress;
+            
+            _serviceParent = new GameObject("Services").transform;
             
             //create default settings
             serviceLocator.Console = new UnityConsole();
@@ -59,7 +61,7 @@ namespace Project.Bootstrap.ServiceInstallers
 
         private async UniTask<T> Instantiate<T>(GameObject servicePrefab) where T : IServiceInstaller
         {
-            var serviceGo = await InstantiateAsync(servicePrefab, transform);
+            var serviceGo = await InstantiateAsync(servicePrefab, _serviceParent);
             var bootProcess = serviceGo.FirstOrDefault();
 
             var installer = bootProcess.GetComponent<T>();

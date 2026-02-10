@@ -3,15 +3,20 @@ using Cysharp.Threading.Tasks;
 using Project.Application;
 using Project.Application.Ports.ServiceLocator;
 using Project.Bootstrap.Enums;
+using Project.Bootstrap.Interfaces;
+using Project.Presentation.UI.Screens.Base;
 using UnityEngine;
 
 namespace Project.Bootstrap.Base
 {
-    public abstract class BaseScreenInstaller : MonoBehaviour
+    public abstract class BaseScreenInstaller<TScreenView> : MonoBehaviour, IScreenInstaller where TScreenView : BaseScreenView
     {
+        public TScreenView Screen => _screenView;
         public InstallStatus InstallStatus { get; protected set; }
 
-
+        [SerializeField] private TScreenView _screenView;
+        
+        
         public async UniTask<InstallStatus> Initialize(IEventBus eventBus, IServiceLocator serviceLocator)
         {
             Debug.Log($"[{GetType().Name}] Initialize: Started");
@@ -19,7 +24,7 @@ namespace Project.Bootstrap.Base
             InstallStatus = InstallStatus.InProgress;
             try
             {
-                await InitializeScreen(eventBus,serviceLocator);
+                await InitializeScreen(eventBus, serviceLocator);
                 InstallStatus = InstallStatus.Succeeded;
             }
             catch (Exception e)
@@ -28,11 +33,11 @@ namespace Project.Bootstrap.Base
                 InstallStatus = InstallStatus.Failed;
             }
 
-            Debug.Log($"[{nameof(BaseScreenInstaller)}] Initialize: Finished - Result: {InstallStatus}");
+            Debug.Log($"[{GetType().Name}] Initialize: Finished - Result: {InstallStatus}");
             return InstallStatus;
         }
 
 
-        protected abstract UniTask InitializeScreen(IEventBus eventBus,IServiceLocator serviceLocator);
+        protected abstract UniTask InitializeScreen(IEventBus eventBus, IServiceLocator serviceLocator);
     }
 }

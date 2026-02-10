@@ -4,6 +4,7 @@ using Project.Application;
 using Project.Application.EventBus;
 using Project.Application.Ports.ServiceLocator;
 using Project.Bootstrap.Enums;
+using Project.Bootstrap.ScreenInstallers;
 using Project.Infrastructure.ServiceLocator;
 using Project.Bootstrap.ServiceInstallers;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace Project.Bootstrap
     public class GameInstaller : MonoBehaviour
     {
         [SerializeField] private ServiceInstaller m_ServiceInstaller;
+        [SerializeField] private ScreenInstaller m_ScreenInstaller;
 
         [Space]
         [SerializeField] private GameObject m_LoadingCanvas;
@@ -41,6 +43,7 @@ namespace Project.Bootstrap
             _serviceLocator = new ServiceLocator();
             
             m_ServiceInstaller.Install(_eventBus,_serviceLocator).Forget();
+            m_ScreenInstaller.Install(_eventBus, _serviceLocator).Forget();
             
             await UniTask.WaitWhile(() => m_ServiceInstaller.InstallStatus != InstallStatus.Succeeded);
             Debug.Log($"[{nameof(GameInstaller)}] Install Finished)");
