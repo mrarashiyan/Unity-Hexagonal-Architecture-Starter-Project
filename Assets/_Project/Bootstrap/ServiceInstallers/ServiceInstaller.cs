@@ -8,6 +8,8 @@ using Project.Bootstrap.Enums;
 using Project.Bootstrap.Interfaces;
 using Project.Presentation.Infrastructures.Locator;
 using Project.Config.Installer;
+using Project.Infrastructure.Console;
+using Project.Infrastructure.GameTime;
 using Project.Presentation.Infrastructures.Base;
 using UnityEngine;
 
@@ -26,6 +28,10 @@ namespace Project.Bootstrap.ServiceInstallers
         {
             ReportProgress(0);
             InstallStatus = InstallStatus.InProgress;
+            
+            //create default settings
+            serviceLocator.Console = new UnityConsole();
+            serviceLocator.GameTime = new UnityGameTime();
 
             // create objects
             var dummyInstaller = await Instantiate<DummyInstaller>(m_ServicesInstallLocator.DummyInstaller);
