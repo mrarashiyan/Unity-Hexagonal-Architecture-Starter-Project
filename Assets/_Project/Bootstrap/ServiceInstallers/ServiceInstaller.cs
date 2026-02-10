@@ -7,20 +7,13 @@ using Project.Application.Ports.ServiceLocator;
 using Project.Bootstrap.Base;
 using Project.Bootstrap.Enums;
 using Project.Config.Installer;
+using Project.Presentation.Infrastructures.Persistence;
 using UnityEngine;
 
 namespace Project.Bootstrap.ServiceInstallers
 {
-    public class ServiceInstaller : MonoBehaviour, IServiceLocator
+    public class ServiceInstaller : MonoBehaviour
     {
-        #region Services
-
-        public StorageInstaller StorageInstaller;
-        
-
-        #endregion
-
-
         public InstallStatus InstallStatus { get; private set; }
         public Action<float> OnProgress;
 
@@ -34,15 +27,15 @@ namespace Project.Bootstrap.ServiceInstallers
             InstallStatus = InstallStatus.InProgress;
 
             // create objects
-            var dummyService = await Instantiate<DummyInstaller>(m_ServicesInstallLocator.DummyInstaller);
-            StorageInstaller = await Instantiate<StorageInstaller>(m_ServicesInstallLocator.StorageInstaller);
+            var dummyInstaller = await Instantiate<DummyInstaller>(m_ServicesInstallLocator.DummyInstaller);
+            var storageInstaller = await Instantiate<StorageInstaller>(m_ServicesInstallLocator.StorageInstaller);
 
             //set dependencies
 
 
             //initialize all services
-            dummyService.Initialize(eventBus).Forget();
-            StorageInstaller.Initialize(eventBus).Forget();
+            dummyInstaller.Initialize(eventBus).Forget();
+            storageInstaller.Initialize(eventBus).Forget();
             
             ReportProgress(100);
 

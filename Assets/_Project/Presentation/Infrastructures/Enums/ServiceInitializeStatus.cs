@@ -1,6 +1,6 @@
-namespace Project.Presentation._Project.Presentation.Common.Enums
+namespace Project.Presentation.Infrastructures.Enums
 {
-    public enum InitializeStatus
+    public enum ServiceInitializeStatus
     {
         NotStarted = 1,
         InProgress = 2,

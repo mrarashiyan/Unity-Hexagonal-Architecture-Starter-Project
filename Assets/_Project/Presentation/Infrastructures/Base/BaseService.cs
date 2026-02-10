@@ -1,17 +1,17 @@
 using System;
 using Cysharp.Threading.Tasks;
-using Project.Presentation._Project.Presentation.Common.Enums;
+using Project.Presentation.Infrastructures.Enums;
 using UnityEngine;
 
 namespace Project.Presentation.Infrastructures.Base
 {
     public abstract class BaseService : MonoBehaviour
     {
-        public InitializeStatus InitializeStatus { get; protected set; }
+        public ServiceInitializeStatus ServiceInitializeStatus { get; protected set; }
 
         public async UniTask Initialize()
         {
-            InitializeStatus = InitializeStatus.InProgress;
+            ServiceInitializeStatus = ServiceInitializeStatus.InProgress;
 
             try
             {
@@ -20,10 +20,10 @@ namespace Project.Presentation.Infrastructures.Base
             catch (Exception e)
             {
                 Debug.LogError($"[{GetType().Name}] {e.Message}");
-                InitializeStatus = InitializeStatus.Failed;
+                ServiceInitializeStatus = ServiceInitializeStatus.Failed;
             }
 
-            InitializeStatus = InitializeStatus.Succeeded;
+            ServiceInitializeStatus = ServiceInitializeStatus.Succeeded;
         }
 
 
