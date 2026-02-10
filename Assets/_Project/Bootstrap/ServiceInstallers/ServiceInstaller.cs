@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Project.Application;
-using Project.Application.Ports.ServiceLocator;
 using Project.Bootstrap.Base;
 using Project.Bootstrap.Enums;
+using Project.Bootstrap.Interfaces;
+using Project.Presentation.Infrastructures.Locator;
 using Project.Config.Installer;
-using Project.Presentation.Infrastructures.Persistence;
+using Project.Presentation.Infrastructures.Base;
 using UnityEngine;
 
 namespace Project.Bootstrap.ServiceInstallers
@@ -17,11 +18,11 @@ namespace Project.Bootstrap.ServiceInstallers
         public InstallStatus InstallStatus { get; private set; }
         public Action<float> OnProgress;
 
-        private List<BaseServiceInstaller> _bootsProcessing = new();
+        private List<IServiceInstaller> _bootsProcessing = new();
 
         [SerializeField] private ServicesInstallLocator m_ServicesInstallLocator;
 
-        public async UniTask<InstallStatus> Install(IEventBus eventBus)
+        public async UniTask<InstallStatus> Install(IEventBus eventBus, ServiceLocator serviceLocator)
         {
             ReportProgress(0);
             InstallStatus = InstallStatus.InProgress;
@@ -36,21 +37,28 @@ namespace Project.Bootstrap.ServiceInstallers
             //initialize all services
             dummyInstaller.Initialize(eventBus).Forget();
             storageInstaller.Initialize(eventBus).Forget();
-            
+
             ReportProgress(100);
 
             var result = await WaitForFinishingBoot();
+            if (result)
+            {
+                // add the services to Locator
+                serviceLocator.StorageService = storageInstaller.Service;
+            }
+
             return result ? InstallStatus.Succeeded : InstallStatus.Failed;
         }
 
-        private async UniTask<T> Instantiate<T>(GameObject servicePrefab)
+        private async UniTask<T> Instantiate<T>(GameObject servicePrefab) where T : IServiceInstaller
         {
             var serviceGo = await InstantiateAsync(servicePrefab, transform);
             var bootProcess = serviceGo.FirstOrDefault();
 
-            _bootsProcessing.Add(bootProcess.GetComponent<BaseServiceInstaller>());
+            var installer = bootProcess.GetComponent<T>();
+            _bootsProcessing.Add(installer);
 
-            return bootProcess.GetComponent<T>();
+            return installer;
         }
 
         private async UniTask<bool> WaitForFinishingBoot()
@@ -61,10 +69,10 @@ namespace Project.Bootstrap.ServiceInstallers
                 await UniTask.WaitUntil(() => process.InstallStatus != InstallStatus.InProgress);
 
                 if (process.InstallStatus == InstallStatus.Failed ||
-                    (process.TimeoutCanBlockBoot && process.InstallStatus == InstallStatus.TimedOut) )
+                    (process.TimeoutCanBlockBoot && process.InstallStatus == InstallStatus.TimedOut))
                     return false;
-                
-                ReportProgress(i * 100/_bootsProcessing.Count);
+
+                ReportProgress(i * 100 / _bootsProcessing.Count);
             }
 
             return true;

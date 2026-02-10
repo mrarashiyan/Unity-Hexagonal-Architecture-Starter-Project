@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using Project.Application;
 using Project.Application.EventBus;
 using Project.Bootstrap.Enums;
+using Project.Presentation.Infrastructures.Locator;
 using Project.Bootstrap.ServiceInstallers;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +19,7 @@ namespace Project.Bootstrap
         [SerializeField] private Slider m_ProgressSlider;
 
         private IEventBus _eventBus;
+        private ServiceLocator _serviceLocator;
         
         private void OnEnable()
         {
@@ -35,8 +37,9 @@ namespace Project.Bootstrap
             Debug.Log($"[{nameof(GameInstaller)}] Install Started)");
             
             _eventBus = new EventBus();
+            _serviceLocator = new ServiceLocator();
             
-            m_ServiceInstaller.Install(_eventBus).Forget();
+            m_ServiceInstaller.Install(_eventBus,_serviceLocator).Forget();
             
             await UniTask.WaitWhile(() => m_ServiceInstaller.InstallStatus != InstallStatus.Succeeded);
             Debug.Log($"[{nameof(GameInstaller)}] Install Finished)");

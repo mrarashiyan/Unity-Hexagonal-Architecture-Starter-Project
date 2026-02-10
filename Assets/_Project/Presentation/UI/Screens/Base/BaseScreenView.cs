@@ -1,14 +1,13 @@
 using Cysharp.Threading.Tasks;
 using Project.Application;
-using Project.Application.Ports.ServiceLocator;
+using Project.Presentation.Infrastructures.Locator;
 using UnityEngine;
-using UnityEngine.LowLevelPhysics2D;
 
-namespace Project.Presentation._Project.Presentation.UI.Screens.Base
+namespace Project.Presentation.UI.Screens.Base
 {
     public abstract class BaseScreenView : MonoBehaviour
     {
-        public abstract UniTask InitializeScreen(IEventBus eventBus, IServiceLocator serviceLocator);
+        public abstract UniTask InitializeScreen(IEventBus eventBus, ServiceLocator serviceLocator);
         
         protected abstract UniTask BeforeShowScreen();
         protected abstract UniTask AfterHideScreen();

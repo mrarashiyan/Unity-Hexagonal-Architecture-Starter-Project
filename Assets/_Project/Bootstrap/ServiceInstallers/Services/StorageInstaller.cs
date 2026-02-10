@@ -8,16 +8,15 @@ using UnityEngine;
 
 namespace Project.Bootstrap.ServiceInstallers
 {
-    public class StorageInstaller : BaseServiceInstaller
+    public class StorageInstaller : BaseServiceInstaller<StorageService>
     {
-        private StorageService _storageService;
         protected override async UniTask InitializeModule()
         {
             var localStorage = new LocalStorage();
             
-            _storageService = gameObject.AddComponent<StorageService>();
-            _storageService.BindDependency(localStorage);
-            await _storageService.Initialize();
+            Service = gameObject.AddComponent<StorageService>();
+            Service.BindDependency(localStorage);
+            await Service.Initialize();
         }
 
         

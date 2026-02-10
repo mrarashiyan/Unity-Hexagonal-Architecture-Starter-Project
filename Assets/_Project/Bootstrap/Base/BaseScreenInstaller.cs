@@ -1,9 +1,8 @@
 using System;
-using System.Threading;
 using Cysharp.Threading.Tasks;
 using Project.Application;
-using Project.Application.Ports.ServiceLocator;
 using Project.Bootstrap.Enums;
+using Project.Presentation.Infrastructures.Locator;
 using UnityEngine;
 
 namespace Project.Bootstrap.Base
@@ -13,7 +12,7 @@ namespace Project.Bootstrap.Base
         public InstallStatus InstallStatus { get; protected set; }
 
 
-        public async UniTask<InstallStatus> Initialize(IEventBus eventBus,IServiceLocator serviceLocator)
+        public async UniTask<InstallStatus> Initialize(IEventBus eventBus,ServiceLocator serviceLocator)
         {
             Debug.Log($"[{GetType().Name}] Initialize: Started");
 
@@ -29,11 +28,11 @@ namespace Project.Bootstrap.Base
                 InstallStatus = InstallStatus.Failed;
             }
 
-            Debug.Log($"[{nameof(BaseServiceInstaller)}] Initialize: Finished - Result: {InstallStatus}");
+            Debug.Log($"[{nameof(BaseScreenInstaller)}] Initialize: Finished - Result: {InstallStatus}");
             return InstallStatus;
         }
 
 
-        protected abstract UniTask InitializeScreen(IEventBus eventBus,IServiceLocator serviceLocator);
+        protected abstract UniTask InitializeScreen(IEventBus eventBus,ServiceLocator serviceLocator);
     }
 }

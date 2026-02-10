@@ -19,6 +19,8 @@ namespace Project.Presentation.Infrastructures.Persistence
         {
             // here we can initialize Online Storage, DBs or etc.
             //await m_OnlineStorage.Initialize();
+
+            await UniTask.Yield();
             
             UserStorage = new UserStorage(_localStorage);
         }
