@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 using Project.Application;
 using Project.Bootstrap.Enums;
 using Project.Bootstrap.Interfaces;
-using Project.Presentation.Infrastructures.Base;
+using Project.Infrastructure.Base;
 using UnityEngine;
 
 namespace Project.Bootstrap.Base

@@ -5,7 +5,7 @@ using Cysharp.Threading.Tasks;
 using Project.Application;
 using Project.Bootstrap.Base;
 using Project.Bootstrap.Enums;
-using Project.Presentation.Infrastructures.Locator;
+using Project.Application.Ports.ServiceLocator;
 using Project.Bootstrap.ScreenInstallers.Screens;
 using Project.Config.Installer;
 using UnityEngine;
@@ -21,7 +21,7 @@ namespace Project.Bootstrap.ScreenInstallers
 
         private List<BaseScreenInstaller> _bootsProcessing = new();
         
-        public async UniTask<InstallStatus> Install(IEventBus eventBus, ServiceLocator serviceLocator)
+        public async UniTask<InstallStatus> Install(IEventBus eventBus, IServiceLocator serviceLocator)
         {
             ReportProgress(0);
             InstallStatus = InstallStatus.InProgress;

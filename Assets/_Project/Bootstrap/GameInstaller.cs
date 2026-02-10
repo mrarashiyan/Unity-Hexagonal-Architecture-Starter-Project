@@ -2,8 +2,9 @@ using System;
 using Cysharp.Threading.Tasks;
 using Project.Application;
 using Project.Application.EventBus;
+using Project.Application.Ports.ServiceLocator;
 using Project.Bootstrap.Enums;
-using Project.Presentation.Infrastructures.Locator;
+using Project.Infrastructure.ServiceLocator;
 using Project.Bootstrap.ServiceInstallers;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,13 +14,13 @@ namespace Project.Bootstrap
     public class GameInstaller : MonoBehaviour
     {
         [SerializeField] private ServiceInstaller m_ServiceInstaller;
-        
+
         [Space]
         [SerializeField] private GameObject m_LoadingCanvas;
         [SerializeField] private Slider m_ProgressSlider;
 
         private IEventBus _eventBus;
-        private ServiceLocator _serviceLocator;
+        private IServiceLocator _serviceLocator;
         
         private void OnEnable()
         {

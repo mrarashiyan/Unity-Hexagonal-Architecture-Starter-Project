@@ -1,7 +1,8 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Project.Bootstrap.Base;
-using Project.Presentation.Infrastructures;
+using Project.Infrastructure;
+using Project.Infrastructure.Services;
 using UnityEngine;
 
 namespace Project.Bootstrap.ServiceInstallers

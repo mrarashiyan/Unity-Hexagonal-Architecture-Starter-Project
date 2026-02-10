@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Project.Application;
+using Project.Application.Ports.ServiceLocator;
 using Project.Bootstrap.Base;
 using Project.Bootstrap.Enums;
 using Project.Bootstrap.Interfaces;
-using Project.Presentation.Infrastructures.Locator;
+using Project.Infrastructure.ServiceLocator;
 using Project.Config.Installer;
 using Project.Infrastructure.Console;
 using Project.Infrastructure.GameTime;
-using Project.Presentation.Infrastructures.Base;
+using Project.Infrastructure.Base;
 using UnityEngine;
 
 namespace Project.Bootstrap.ServiceInstallers
@@ -24,7 +25,7 @@ namespace Project.Bootstrap.ServiceInstallers
 
         [SerializeField] private ServicesInstallLocator m_ServicesInstallLocator;
 
-        public async UniTask<InstallStatus> Install(IEventBus eventBus, ServiceLocator serviceLocator)
+        public async UniTask<InstallStatus> Install(IEventBus eventBus, IServiceLocator serviceLocator)
         {
             ReportProgress(0);
             InstallStatus = InstallStatus.InProgress;
