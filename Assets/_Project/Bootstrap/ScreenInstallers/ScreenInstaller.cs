@@ -6,44 +6,36 @@ using Project.Application;
 using Project.Application.Ports.ServiceLocator;
 using Project.Bootstrap.Base;
 using Project.Bootstrap.Enums;
+using Project.Bootstrap.ScreenInstallers.Screens;
+using Project.Bootstrap.ServiceInstallers;
 using Project.Config.Installer;
 using UnityEngine;
 
-namespace Project.Bootstrap.ServiceInstallers
+namespace Project.Bootstrap.ScreenInstallers
 {
-    public class ServiceInstaller : MonoBehaviour, IServiceLocator
+    public class ScreenInstaller : MonoBehaviour
     {
-        #region Services
-
-        public StorageInstaller StorageInstaller;
+        [SerializeField] private ScreenInstallLocator m_ScreenInstallLocator;
         
-
-        #endregion
-
-
         public InstallStatus InstallStatus { get; private set; }
         public Action<float> OnProgress;
 
-        private List<BaseServiceInstaller> _bootsProcessing = new();
-
-        [SerializeField] private ServicesInstallLocator m_ServicesInstallLocator;
-
-        public async UniTask<InstallStatus> Install(IEventBus eventBus)
+        private List<BaseScreenInstaller> _bootsProcessing = new();
+        
+        public async UniTask<InstallStatus> Install(IEventBus eventBus, IServiceLocator serviceLocator)
         {
             ReportProgress(0);
             InstallStatus = InstallStatus.InProgress;
 
             // create objects
-            var dummyService = await Instantiate<DummyInstaller>(m_ServicesInstallLocator.DummyInstaller);
-            StorageInstaller = await Instantiate<StorageInstaller>(m_ServicesInstallLocator.StorageInstaller);
+            var dummyScreen = await Instantiate<DummyScreenInstaller>(m_ScreenInstallLocator.DummyScreen);
 
             //set dependencies
 
 
             //initialize all services
-            dummyService.Initialize(eventBus).Forget();
-            StorageInstaller.Initialize(eventBus).Forget();
-            
+            dummyScreen.Initialize(eventBus,serviceLocator).Forget();
+
             ReportProgress(100);
 
             var result = await WaitForFinishingBoot();
@@ -55,25 +47,25 @@ namespace Project.Bootstrap.ServiceInstallers
             var serviceGo = await InstantiateAsync(servicePrefab, transform);
             var bootProcess = serviceGo.FirstOrDefault();
 
-            _bootsProcessing.Add(bootProcess.GetComponent<BaseServiceInstaller>());
+            _bootsProcessing.Add(bootProcess.GetComponent<BaseScreenInstaller>());
 
             return bootProcess.GetComponent<T>();
         }
 
         private async UniTask<bool> WaitForFinishingBoot()
         {
+
             for (int i = 0; i < _bootsProcessing.Count; i++)
             {
                 var process = _bootsProcessing[i];
                 await UniTask.WaitUntil(() => process.InstallStatus != InstallStatus.InProgress);
-
-                if (process.InstallStatus == InstallStatus.Failed ||
-                    (process.TimeoutCanBlockBoot && process.InstallStatus == InstallStatus.TimedOut) )
+                
+                if(process.InstallStatus == InstallStatus.Failed)
                     return false;
                 
-                ReportProgress(i * 100/_bootsProcessing.Count);
+                ReportProgress(i * 100 /_bootsProcessing.Count);
             }
-
+            
             return true;
         }
 
@@ -81,5 +73,6 @@ namespace Project.Bootstrap.ServiceInstallers
         {
             OnProgress?.Invoke(progress);
         }
+        
     }
 }

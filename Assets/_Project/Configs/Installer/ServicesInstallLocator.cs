@@ -6,7 +6,6 @@ namespace Project.Config.Installer
     public class ServicesInstallLocator : ScriptableObject
     {
         public GameObject DummyInstaller;
-        public GameObject LocalStorage;
-        public GameObject TimeInstaller;
+        public GameObject StorageInstaller;
     }
 }

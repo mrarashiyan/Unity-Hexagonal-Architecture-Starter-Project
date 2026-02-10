@@ -1,10 +1,8 @@
-using Project.Application.Ports.Persistance.LocalStorage.Interface;
+using Project.Application.Ports.Persistence.Storage;
 
 namespace Project.Application.Ports.ServiceLocator
 {
     public interface IServiceLocator
     {
-        public ILocalStorage LocalStorage { get; }
-        public IGameTime GameTime { get; }
     }
 }
