@@ -4,14 +4,11 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using Project.Application;
 using Project.Application.Ports.ServiceLocator;
-using Project.Bootstrap.Base;
 using Project.Bootstrap.Enums;
 using Project.Bootstrap.Interfaces;
-using Project.Infrastructure.ServiceLocator;
 using Project.Config.Installer;
 using Project.Infrastructure.Console;
 using Project.Infrastructure.GameTime;
-using Project.Infrastructure.Base;
 using UnityEngine;
 
 namespace Project.Bootstrap.ServiceInstallers
@@ -37,6 +34,7 @@ namespace Project.Bootstrap.ServiceInstallers
             // create objects
             var dummyInstaller = await Instantiate<DummyInstaller>(m_ServicesInstallLocator.DummyInstaller);
             var storageInstaller = await Instantiate<StorageInstaller>(m_ServicesInstallLocator.StorageInstaller);
+            var gameDesignInstaller = await Instantiate<GameDesignInstaller>(m_ServicesInstallLocator.GameDesignInstaller);
 
             //set dependencies
 
@@ -44,6 +42,7 @@ namespace Project.Bootstrap.ServiceInstallers
             //initialize all services
             dummyInstaller.Initialize(eventBus).Forget();
             storageInstaller.Initialize(eventBus).Forget();
+            gameDesignInstaller.Initialize(eventBus).Forget();
 
             ReportProgress(100);
 
@@ -52,6 +51,7 @@ namespace Project.Bootstrap.ServiceInstallers
             {
                 // add the services to Locator
                 serviceLocator.StorageService = storageInstaller.Service;
+                serviceLocator.GameDesignService = gameDesignInstaller.Service;
             }
 
             return result ? InstallStatus.Succeeded : InstallStatus.Failed;

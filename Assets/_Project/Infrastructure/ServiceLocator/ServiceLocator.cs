@@ -9,5 +9,6 @@ namespace Project.Infrastructure.ServiceLocator
         public IGameTime GameTime { get; set; }
         public IConsole Console { get; set; }
         public IStorageService StorageService { get; set; }
+        public IGameDesignService GameDesignService { get; set; }
     }
 }
