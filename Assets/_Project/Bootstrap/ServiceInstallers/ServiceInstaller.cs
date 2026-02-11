@@ -4,14 +4,11 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using Project.Application;
 using Project.Application.Ports.ServiceLocator;
-using Project.Bootstrap.Base;
 using Project.Bootstrap.Enums;
 using Project.Bootstrap.Interfaces;
-using Project.Infrastructure.ServiceLocator;
 using Project.Config.Installer;
 using Project.Infrastructure.Console;
 using Project.Infrastructure.GameTime;
-using Project.Infrastructure.Base;
 using UnityEngine;
 
 namespace Project.Bootstrap.ServiceInstallers
@@ -21,14 +18,16 @@ namespace Project.Bootstrap.ServiceInstallers
         public InstallStatus InstallStatus { get; private set; }
         public Action<float> OnProgress;
 
-        private List<IServiceInstaller> _bootsProcessing = new();
-
         [SerializeField] private ServicesInstallLocator m_ServicesInstallLocator;
-
+        private List<IServiceInstaller> _bootsProcessing = new();
+        private Transform _serviceParent;
+        
         public async UniTask<InstallStatus> Install(IEventBus eventBus, IServiceLocator serviceLocator)
         {
             ReportProgress(0);
             InstallStatus = InstallStatus.InProgress;
+            
+            _serviceParent = new GameObject("Services").transform;
             
             //create default settings
             serviceLocator.Console = new UnityConsole();
@@ -37,6 +36,7 @@ namespace Project.Bootstrap.ServiceInstallers
             // create objects
             var dummyInstaller = await Instantiate<DummyInstaller>(m_ServicesInstallLocator.DummyInstaller);
             var storageInstaller = await Instantiate<StorageInstaller>(m_ServicesInstallLocator.StorageInstaller);
+            var gameDesignInstaller = await Instantiate<GameDesignInstaller>(m_ServicesInstallLocator.GameDesignInstaller);
 
             //set dependencies
 
@@ -44,6 +44,7 @@ namespace Project.Bootstrap.ServiceInstallers
             //initialize all services
             dummyInstaller.Initialize(eventBus).Forget();
             storageInstaller.Initialize(eventBus).Forget();
+            gameDesignInstaller.Initialize(eventBus).Forget();
 
             ReportProgress(100);
 
@@ -52,6 +53,7 @@ namespace Project.Bootstrap.ServiceInstallers
             {
                 // add the services to Locator
                 serviceLocator.StorageService = storageInstaller.Service;
+                serviceLocator.GameDesignService = gameDesignInstaller.Service;
             }
 
             return result ? InstallStatus.Succeeded : InstallStatus.Failed;
@@ -59,7 +61,7 @@ namespace Project.Bootstrap.ServiceInstallers
 
         private async UniTask<T> Instantiate<T>(GameObject servicePrefab) where T : IServiceInstaller
         {
-            var serviceGo = await InstantiateAsync(servicePrefab, transform);
+            var serviceGo = await InstantiateAsync(servicePrefab, _serviceParent);
             var bootProcess = serviceGo.FirstOrDefault();
 
             var installer = bootProcess.GetComponent<T>();

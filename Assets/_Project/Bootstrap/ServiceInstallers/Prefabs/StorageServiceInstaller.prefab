@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3014091297011117061}
   - component: {fileID: 8976762025489010196}
   m_Layer: 0
-  m_Name: Storage
+  m_Name: StorageServiceInstaller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

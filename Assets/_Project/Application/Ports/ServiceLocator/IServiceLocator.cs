@@ -8,5 +8,6 @@ namespace Project.Application.Ports.ServiceLocator
         IGameTime GameTime { get; set; }
         IConsole Console { get; set; }
         IStorageService StorageService { get; set; }
+        IGameDesignService GameDesignService { get; set; }
     }
 }

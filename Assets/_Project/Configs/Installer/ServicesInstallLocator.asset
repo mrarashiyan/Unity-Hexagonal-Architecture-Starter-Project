@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: ServicesInstallLocator
   m_EditorClassIdentifier: Project.Config::Project.Config.Installer.ServicesInstallLocator
   DummyInstaller: {fileID: 5668424074873064538, guid: ba6d1da55426a46c9a299066e6a7369d, type: 3}
-  LocalStorage: {fileID: 6973313787157742487, guid: 9c01a2bd067b049248ca8ec96dd0fef4, type: 3}
-  TimeInstaller: {fileID: 5042746463113645006, guid: 614a9312bf93c4ad190ed9712f27b691, type: 3}
+  StorageInstaller: {fileID: 7625842751172561946, guid: e3badd69bb5c542d78360215383d81df, type: 3}
+  GameDesignInstaller: {fileID: 4935901108628294280, guid: 7aaa75160a80b46f9a4d6bfaf572c261, type: 3}
