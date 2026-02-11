@@ -30,6 +30,7 @@ namespace Project.Bootstrap.ScreenInstallers
 
             _screensParent = new GameObject("Screens").transform;
             
+            await UniTask.WaitUntil(() => serviceLocator.UserInterface != null);
             
             // create objects
             var dummyScreen = await Instantiate<DummyScreenInstaller>(m_ScreenInstallLocator.DummyScreen);
@@ -38,11 +39,13 @@ namespace Project.Bootstrap.ScreenInstallers
 
 
             //initialize all services
-            dummyScreen.Initialize(eventBus, serviceLocator).Forget();
+            dummyScreen.Initialize(eventBus, serviceLocator,true).Forget();
+
             ReportProgress(100);
 
             var result = await WaitForFinishingBoot();
-            return result ? InstallStatus.Succeeded : InstallStatus.Failed;
+            InstallStatus = result ? InstallStatus.Succeeded : InstallStatus.Failed;
+            return InstallStatus;
         }
 
         private async UniTask<T> Instantiate<T>(GameObject servicePrefab) where T : IScreenInstaller

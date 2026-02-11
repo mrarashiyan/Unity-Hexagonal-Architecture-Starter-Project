@@ -10,7 +10,6 @@ namespace Project.Presentation.UI.Screens
     {
         public override async UniTask InitializeScreen(IEventBus eventBus, IServiceLocator serviceLocator)
         {
-            
         }
 
         protected override async UniTask BeforeShowScreen()

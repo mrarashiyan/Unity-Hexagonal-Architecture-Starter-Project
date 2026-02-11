@@ -46,12 +46,20 @@ namespace Project.Bootstrap
             m_ScreenInstaller.Install(_eventBus, _serviceLocator).Forget();
             
             await UniTask.WaitWhile(() => m_ServiceInstaller.InstallStatus != InstallStatus.Succeeded);
+            await UniTask.WaitWhile(() => m_ScreenInstaller.InstallStatus != InstallStatus.Succeeded);
             Debug.Log($"[{nameof(GameInstaller)}] Install Finished)");
+            
+            PostProcess();
         }
 
         private void SetProgress(float progress)
         {
             m_ProgressSlider.value = progress;
+        }
+
+        private void PostProcess()
+        {
+            _serviceLocator.UserInterface.ShowDefaultScreen();
         }
     }
 }

@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: ScreenInstallLocator
   m_EditorClassIdentifier: Project.Config::Project.Config.Installer.ScreenInstallLocator
   DummyScreen: {fileID: 4386636233589922194, guid: 386e6cde607a741debb6fd258c1d1b4f, type: 3}
+  HomeScreen: {fileID: 9046554236615980018, guid: 1ee44350180b341ff91f1c4a2bd12bdc, type: 3}

@@ -8,5 +8,6 @@ namespace Project.Config.Installer
         public GameObject DummyInstaller;
         public GameObject StorageInstaller;
         public GameObject GameDesignInstaller;
+        public GameObject UserInterfaceInstaller;
     }
 }

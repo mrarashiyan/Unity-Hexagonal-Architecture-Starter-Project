@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Project.Application;
+using Project.Application.Ports.ServiceLocator;
 using Project.Bootstrap.Enums;
 using Project.Bootstrap.Interfaces;
 using Project.Infrastructure.Base;
@@ -17,7 +18,7 @@ namespace Project.Bootstrap.Base
 
         protected IEventBus _eventBus;
         
-        public async UniTask<InstallStatus> Initialize(IEventBus eventBus, int timeout = 5, bool timeoutCanBlockBoot = false)
+        public async UniTask<InstallStatus> Initialize(IEventBus eventBus, IServiceLocator serviceLocator, int timeout = 5, bool timeoutCanBlockBoot = false)
         {
             Debug.Log($"[{GetType().Name}] Initialize: Started");
             _eventBus = eventBus;
@@ -34,7 +35,7 @@ namespace Project.Bootstrap.Base
             }
             catch (Exception e)
             {
-                Debug.LogError($"[{GetType().Name}] Exception={e.Message}");
+                Debug.LogError($"[{GetType().Name}] Exception={e.Message} \nStack={e.StackTrace}");
                 
                 if(e is TimeoutException)
                     if(timeoutCanBlockBoot == false)
@@ -42,7 +43,8 @@ namespace Project.Bootstrap.Base
                     else
                         InstallStatus = InstallStatus.Failed;
             }
-            
+
+            serviceLocator.AddService(Service);
             Debug.Log($"[{GetType().Name}] Initialize: Finished - Result: {InstallStatus}");
             return InstallStatus;
         }
