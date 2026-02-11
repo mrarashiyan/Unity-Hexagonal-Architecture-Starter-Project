@@ -1,29 +1,30 @@
 using System;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Project.Application;
 using Project.Application.Ports.ServiceLocator;
-using Project.Application.UseCases.Level;
 using Project.Presentation._Project.Presentation.UI.Widgets;
 using Project.Presentation.UI.Screens.Base;
+using Project.Presentation.UI.Screens.Home;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Project.Presentation.UI.Screens
 {
-    public class HomeScreenView : BaseScreenView
+    /// <summary>
+    /// Passive View for Home Screen. Only handles Unity-specific UI operations.
+    /// </summary>
+    public class HomeScreenView : BaseScreenView, IHomeScreenView
     {
         [SerializeField] private LevelSelectButtonView _levelSelectButtonPrefab;
         [SerializeField] private Transform _levelContainer;
         [SerializeField] private Sprite[] _levelImages;
 
+        private HomeScreenPresenter _presenter;
+        private readonly List<LevelSelectButtonView> _activeButtons = new();
 
-        private int _levelsCount;
-        private IServiceLocator _serviceLocator;
-        private ILoadLevelUseCase _loadLevelUseCase;
-
-        public void BindDependencies(ILoadLevelUseCase loadLevelUseCase)
+        public void BindPresenter(HomeScreenPresenter presenter)
         {
-            _loadLevelUseCase = loadLevelUseCase;
+            _presenter = presenter ?? throw new ArgumentNullException(nameof(presenter));
         }
 
         public override async UniTask InitializeScreen(IEventBus eventBus, IServiceLocator serviceLocator)
@@ -33,38 +34,67 @@ namespace Project.Presentation.UI.Screens
 
             if (serviceLocator == null)
                 throw new NullReferenceException("serviceLocator is Null");
-
-            _serviceLocator = serviceLocator;
-            _levelsCount = _serviceLocator.GameDesignService.LevelData.LevelCount;
         }
 
         protected override async UniTask BeforeShowScreen()
         {
-            for (int i = 1; i <= _levelsCount; i++)
-            {
-                var btn = Instantiate(_levelSelectButtonPrefab, _levelContainer);
-                var buttonView = btn.GetComponent<LevelSelectButtonView>();
-                buttonView.SetBackground(_levelImages[i]);
-                buttonView.levelIndex = i;
-                buttonView.OnButtonClick += LevelSelectButtonClicked;
-            }
+            await _presenter.InitializeAsync();
         }
 
-        protected override async UniTask AfterShowScreen() { }
-        protected override async UniTask BeforeHideScreen() { }
+        protected override async UniTask AfterShowScreen()
+        {
+            // Placeholder for animations or post-show logic
+        }
+
+        protected override async UniTask BeforeHideScreen()
+        {
+            // Placeholder for pre-hide animations
+        }
 
         protected override async UniTask AfterHideScreen()
         {
-            while (_levelContainer.childCount > 0)
+            _presenter.OnCleanup();
+        }
+
+        // IHomeScreenView Implementation
+
+        public void DisplayLevels(HomeScreenViewModel viewModel)
+        {
+            ClearLevels();
+
+            foreach (var level in viewModel.Levels)
             {
-                Destroy(_levelContainer.GetChild(0).gameObject);
-                await UniTask.Yield();
+                var btn = Instantiate(_levelSelectButtonPrefab, _levelContainer);
+                var buttonView = btn.GetComponent<LevelSelectButtonView>();
+
+                // Set the sprite (with bounds check)
+                if (level.SpriteIndex >= 0 && level.SpriteIndex < _levelImages.Length)
+                {
+                    buttonView.SetBackground(_levelImages[level.SpriteIndex]);
+                }
+
+                buttonView.levelIndex = level.LevelIndex;
+                buttonView.OnButtonClick += OnLevelButtonClicked;
+                _activeButtons.Add(buttonView);
             }
         }
 
-        private async void LevelSelectButtonClicked(int levelIndex)
+        public void ClearLevels()
         {
-            await _loadLevelUseCase.Execute(levelIndex);
+            foreach (var button in _activeButtons)
+            {
+                if (button != null)
+                {
+                    button.OnButtonClick -= OnLevelButtonClicked;
+                    Destroy(button.gameObject);
+                }
+            }
+            _activeButtons.Clear();
+        }
+
+        private async void OnLevelButtonClicked(int levelIndex)
+        {
+            await _presenter.OnLevelSelectedAsync(levelIndex);
         }
     }
 }

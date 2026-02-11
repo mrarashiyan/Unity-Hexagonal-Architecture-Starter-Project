@@ -4,6 +4,7 @@ using Project.Application.Ports.ServiceLocator;
 using Project.Application.UseCases.Level;
 using Project.Bootstrap.Base;
 using Project.Presentation.UI.Screens;
+using Project.Presentation.UI.Screens.Home;
 using UnityEngine;
 
 namespace Project.Bootstrap.ScreenInstallers.Screens
@@ -15,15 +16,23 @@ namespace Project.Bootstrap.ScreenInstallers.Screens
             // Wait for dependencies
             await UniTask.WaitUntil(() => serviceLocator.GameDesignService != null);
             await UniTask.WaitUntil(() => serviceLocator.SceneManagement != null);
+            await UniTask.WaitUntil(() => serviceLocator.UserInterface != null);
 
             await Screen.InitializeScreen(eventBus, serviceLocator);
 
-            // Create and inject the use case
+            // Create dependencies
             var loadLevelUseCase = new LoadLevelUseCase(
                 serviceLocator.GameDesignService,
                 serviceLocator.SceneManagement,
                 serviceLocator.UserInterface);
-            Screen.BindDependencies(loadLevelUseCase);
+
+            var presenter = new HomeScreenPresenter(
+                Screen,
+                serviceLocator.GameDesignService,
+                loadLevelUseCase);
+
+            // Inject presenter into view
+            Screen.BindPresenter(presenter);
 
             await Screen.HideScreen(true, true);
         }
