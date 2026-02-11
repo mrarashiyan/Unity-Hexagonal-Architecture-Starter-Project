@@ -28,6 +28,7 @@ namespace Project.Bootstrap.ServiceInstallers
             InstallStatus = InstallStatus.InProgress;
 
             _serviceParent = new GameObject("Services").transform;
+            DontDestroyOnLoad(_serviceParent);
 
             // create objects
             var dummyInstaller = await Instantiate<DummyInstaller>(m_ServicesInstallLocator.DummyInstaller);
