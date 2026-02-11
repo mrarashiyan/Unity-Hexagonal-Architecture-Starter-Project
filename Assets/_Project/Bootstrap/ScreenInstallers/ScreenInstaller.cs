@@ -29,6 +29,7 @@ namespace Project.Bootstrap.ScreenInstallers
             InstallStatus = InstallStatus.InProgress;
 
             _screensParent = new GameObject("Screens").transform;
+            DontDestroyOnLoad(_screensParent);
             
             await UniTask.WaitUntil(() => serviceLocator.UserInterface != null);
             

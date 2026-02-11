@@ -37,6 +37,7 @@ namespace Project.Bootstrap
 
         private void Start()
         {
+            DontDestroyOnLoad(gameObject);
             Initialize().Forget();
         }
 

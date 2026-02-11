@@ -10,6 +10,7 @@ namespace Project.Application.Ports.ServiceLocator
         IUserInterfaceService UserInterface { get;}
         IStorageService StorageService { get;}
         IGameDesignService GameDesignService { get;}
+        ISceneManagement SceneManagement { get; }
         void AddService<TService>(TService service);
     }
 }
