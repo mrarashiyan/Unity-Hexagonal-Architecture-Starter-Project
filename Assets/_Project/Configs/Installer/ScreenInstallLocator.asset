@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96ad259fe81d4d6ca9b088c4ddf3f327, type: 3}
   m_Name: ScreenInstallLocator
   m_EditorClassIdentifier: Project.Config::Project.Config.Installer.ScreenInstallLocator
-  DummyScreen: {fileID: 4386636233589922194, guid: 386e6cde607a741debb6fd258c1d1b4f, type: 3}
+  LoadingOverlay: {fileID: 1749109623816506682, guid: 0ca062e829f524107a6a64f0b00524aa, type: 3}
+  DummyScreen: {fileID: 5277532653179247134, guid: 2e0f455e55cf5498aac47e03e8630a86, type: 3}
   HomeScreen: {fileID: 9046554236615980018, guid: 1ee44350180b341ff91f1c4a2bd12bdc, type: 3}

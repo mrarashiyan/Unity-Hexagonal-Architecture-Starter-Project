@@ -98,9 +98,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 231500344536975242, guid: 80630190134d14d7490de12483e74911, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4386495434320876521}
-    - targetCorrespondingSourceObject: {fileID: 231500344536975242, guid: 80630190134d14d7490de12483e74911, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 2678343945430952281}
   m_SourcePrefab: {fileID: 100100000, guid: 80630190134d14d7490de12483e74911, type: 3}
 --- !u!1 &4386636233589922194 stripped
@@ -108,19 +105,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 231500344536975242, guid: 80630190134d14d7490de12483e74911, type: 3}
   m_PrefabInstance: {fileID: 4599866541234576920}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4386495434320876521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4386636233589922194}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31d7c4458791464e914ba08a06934b02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Project.Bootstrap::Project.Bootstrap.ScreenInstallers.Screens.DummyScreenInstaller
-  _screenView: {fileID: 2678343945430952281}
 --- !u!114 &2678343945430952281
 MonoBehaviour:
   m_ObjectHideFlags: 0

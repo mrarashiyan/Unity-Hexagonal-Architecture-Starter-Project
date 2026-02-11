@@ -33,12 +33,14 @@ namespace Project.Bootstrap.ScreenInstallers
             await UniTask.WaitUntil(() => serviceLocator.UserInterface != null);
             
             // create objects
+            var loadingOverlay = await Instantiate<LoadingOverlayInstaller>(m_ScreenInstallLocator.LoadingOverlay);
             var dummyScreen = await Instantiate<DummyScreenInstaller>(m_ScreenInstallLocator.DummyScreen);
 
             //set dependencies
 
 
             //initialize all services
+            loadingOverlay.Initialize(eventBus, serviceLocator).Forget();
             dummyScreen.Initialize(eventBus, serviceLocator,true).Forget();
 
             ReportProgress(100);
