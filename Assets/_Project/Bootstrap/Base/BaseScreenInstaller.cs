@@ -29,7 +29,7 @@ namespace Project.Bootstrap.Base
             }
             catch (Exception e)
             {
-                Debug.LogError($"[{GetType().Name}] Exception={e.Message}");
+                Debug.LogError($"[{GetType().Name}] Exception={e.Message} \nStack={e.StackTrace}");
                 InstallStatus = InstallStatus.Failed;
             }
 

@@ -12,12 +12,14 @@ namespace Project.Presentation.UI.Screens.Base
         protected abstract UniTask BeforeShowScreen();
         protected abstract UniTask AfterHideScreen();
 
+        [ContextMenu("Show Screen")]
         public async UniTask ShowScreen()
         {
             await BeforeShowScreen();
             gameObject.SetActive(true);
         }
 
+        [ContextMenu("Hide Screen")]
         public async UniTask HideScreen()
         {
             gameObject.SetActive(false);

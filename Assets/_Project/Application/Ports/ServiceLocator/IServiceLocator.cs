@@ -5,9 +5,10 @@ namespace Project.Application.Ports.ServiceLocator
 {
     public interface IServiceLocator
     {
-        IGameTime GameTime { get; set; }
-        IConsole Console { get; set; }
-        IStorageService StorageService { get; set; }
-        IGameDesignService GameDesignService { get; set; }
+        IGameTime GameTime { get;  }
+        IConsole Console { get;}
+        IStorageService StorageService { get;}
+        IGameDesignService GameDesignService { get;}
+        void AddService<TService>(TService service);
     }
 }

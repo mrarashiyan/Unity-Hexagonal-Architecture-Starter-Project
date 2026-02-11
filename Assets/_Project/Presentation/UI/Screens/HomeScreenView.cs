@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using Project.Application;
 using Project.Application.Ports.ServiceLocator;
@@ -20,8 +21,14 @@ namespace Project.Presentation.UI.Screens
         
         public override async UniTask InitializeScreen(IEventBus eventBus, IServiceLocator serviceLocator)
         {
+            if(eventBus == null)
+                throw new NullReferenceException("eventBus is Null");
+            
+            if (serviceLocator == null)
+                throw new NullReferenceException("serviceLocator is Null");
+            
             _serviceLocator = serviceLocator;
-            _levelsCount = serviceLocator.GameDesignService.LevelData.LevelCount;
+            _levelsCount = _serviceLocator.GameDesignService.LevelData.LevelCount;
         }
 
         protected override async UniTask BeforeShowScreen()
@@ -38,9 +45,9 @@ namespace Project.Presentation.UI.Screens
 
         protected override async UniTask AfterHideScreen()
         {
-            while (transform.childCount > 0)
+            while (_levelContainer.childCount > 0)
             {
-                Destroy(transform.GetChild(0).gameObject);
+                Destroy(_levelContainer.GetChild(0).gameObject);
                 await UniTask.Yield();
             }
         }

@@ -11,6 +11,9 @@ namespace Project.Bootstrap.ScreenInstallers.Screens
     {
         protected override async UniTask InitializeScreen(IEventBus eventBus, IServiceLocator serviceLocator)
         {
+            // there is a dependency
+            await UniTask.WaitUntil(() => serviceLocator.GameDesignService != null);
+
             await Screen.InitializeScreen(eventBus, serviceLocator);
             await Screen.HideScreen();
         }
