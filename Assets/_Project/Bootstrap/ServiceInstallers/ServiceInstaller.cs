@@ -32,6 +32,7 @@ namespace Project.Bootstrap.ServiceInstallers
             // create objects
             var dummyInstaller = await Instantiate<DummyInstaller>(m_ServicesInstallLocator.DummyInstaller);
             var storageInstaller = await Instantiate<StorageInstaller>(m_ServicesInstallLocator.StorageInstaller);
+            var userInterfaceInstaller = await Instantiate<UserInterfaceInstaller>(m_ServicesInstallLocator.UserInterfaceInstaller);
             var gameDesignInstaller =
                 await Instantiate<GameDesignInstaller>(m_ServicesInstallLocator.GameDesignInstaller);
 
@@ -42,11 +43,13 @@ namespace Project.Bootstrap.ServiceInstallers
             dummyInstaller.Initialize(eventBus, serviceLocator).Forget();
             storageInstaller.Initialize(eventBus, serviceLocator).Forget();
             gameDesignInstaller.Initialize(eventBus, serviceLocator).Forget();
+            userInterfaceInstaller.Initialize(eventBus, serviceLocator).Forget();
 
             ReportProgress(100);
 
             var result = await WaitForFinishingBoot();
-            return result ? InstallStatus.Succeeded : InstallStatus.Failed;
+            InstallStatus = result ? InstallStatus.Succeeded : InstallStatus.Failed;
+            return InstallStatus;
         }
 
         private async UniTask<T> Instantiate<T>(GameObject servicePrefab) where T : IServiceInstaller

@@ -10,6 +10,8 @@ namespace Project.Infrastructure.ServiceLocator
     {
         public IGameTime GameTime { get; private set; } = new UnityGameTime();
         public IConsole Console { get; private set; } = new UnityConsole();
+        
+        public IUserInterfaceService UserInterface { get; private set; }
         public IStorageService StorageService { get; private set; }
         public IGameDesignService GameDesignService { get; private set; }
 
@@ -17,12 +19,10 @@ namespace Project.Infrastructure.ServiceLocator
         {
             switch (service)
             {
-                case IGameTime gameTime:
-                    GameTime = gameTime;
+                case IUserInterfaceService userInterfaceService:
+                    UserInterface = userInterfaceService;
                     break;
-                case IConsole console:
-                    Console = console;
-                    break;
+                
                 case IStorageService storage:
                     StorageService = storage;
                     break;

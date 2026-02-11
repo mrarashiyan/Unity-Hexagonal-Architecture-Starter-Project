@@ -7,6 +7,7 @@ namespace Project.Application.Ports.ServiceLocator
     {
         IGameTime GameTime { get;  }
         IConsole Console { get;}
+        IUserInterfaceService UserInterface { get;}
         IStorageService StorageService { get;}
         IGameDesignService GameDesignService { get;}
         void AddService<TService>(TService service);
