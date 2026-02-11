@@ -2,6 +2,7 @@ using System;
 using Cysharp.Threading.Tasks;
 using Project.Application;
 using Project.Application.Ports.ServiceLocator;
+using Project.Application.UseCases.Level;
 using Project.Presentation._Project.Presentation.UI.Widgets;
 using Project.Presentation.UI.Screens.Base;
 using UnityEngine;
@@ -14,26 +15,32 @@ namespace Project.Presentation.UI.Screens
         [SerializeField] private LevelSelectButtonView _levelSelectButtonPrefab;
         [SerializeField] private Transform _levelContainer;
         [SerializeField] private Sprite[] _levelImages;
-        
-        
+
+
         private int _levelsCount;
         private IServiceLocator _serviceLocator;
-        
+        private ILoadLevelUseCase _loadLevelUseCase;
+
+        public void BindDependencies(ILoadLevelUseCase loadLevelUseCase)
+        {
+            _loadLevelUseCase = loadLevelUseCase;
+        }
+
         public override async UniTask InitializeScreen(IEventBus eventBus, IServiceLocator serviceLocator)
         {
             if(eventBus == null)
                 throw new NullReferenceException("eventBus is Null");
-            
+
             if (serviceLocator == null)
                 throw new NullReferenceException("serviceLocator is Null");
-            
+
             _serviceLocator = serviceLocator;
             _levelsCount = _serviceLocator.GameDesignService.LevelData.LevelCount;
         }
 
         protected override async UniTask BeforeShowScreen()
         {
-            for (int i = 0; i < _levelsCount; i++)
+            for (int i = 1; i <= _levelsCount; i++)
             {
                 var btn = Instantiate(_levelSelectButtonPrefab, _levelContainer);
                 var buttonView = btn.GetComponent<LevelSelectButtonView>();
@@ -43,13 +50,8 @@ namespace Project.Presentation.UI.Screens
             }
         }
 
-        protected override async UniTask AfterShowScreen()
-        {
-        }
-
-        protected override async UniTask BeforeHideScreen()
-        {
-        }
+        protected override async UniTask AfterShowScreen() { }
+        protected override async UniTask BeforeHideScreen() { }
 
         protected override async UniTask AfterHideScreen()
         {
@@ -60,9 +62,9 @@ namespace Project.Presentation.UI.Screens
             }
         }
 
-        private void LevelSelectButtonClicked(int levelIndex)
+        private async void LevelSelectButtonClicked(int levelIndex)
         {
-            _serviceLocator.Console.Log(levelIndex.ToString());
+            await _loadLevelUseCase.Execute(levelIndex);
         }
     }
 }

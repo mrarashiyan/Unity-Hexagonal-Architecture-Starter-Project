@@ -664,7 +664,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 231500344536975242, guid: 80630190134d14d7490de12483e74911, type: 3}
       propertyPath: m_Name
-      value: HomeScreen Variant
+      value: HomeScreen
       objectReference: {fileID: 0}
     - target: {fileID: 7066953857587805000, guid: 80630190134d14d7490de12483e74911, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
@@ -784,6 +784,7 @@ MonoBehaviour:
   _levelSelectButtonPrefab: {fileID: -2312169312903730147, guid: f1d01d37ccbdb44158f99c04ca3bba28, type: 3}
   _levelContainer: {fileID: 5981838176352676576}
   _levelImages:
+  - {fileID: -3164809056393425246, guid: 3bff61fb6639c41b5b11310ee2bfcd88, type: 3}
   - {fileID: -3164809056393425246, guid: 3bff61fb6639c41b5b11310ee2bfcd88, type: 3}
   - {fileID: -5225540622116197949, guid: ea63e005414c24cf3ae1fb1b72fa5e75, type: 3}
   - {fileID: 8793915729297761979, guid: 08c9ae8c5e3254463b6342b470742dce, type: 3}
