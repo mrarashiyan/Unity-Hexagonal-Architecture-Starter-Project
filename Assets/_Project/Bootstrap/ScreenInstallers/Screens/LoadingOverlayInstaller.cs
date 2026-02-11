@@ -7,13 +7,10 @@ using UnityEngine;
 
 namespace Project.Bootstrap.ScreenInstallers.Screens
 {
-    public class HomeScreenInstaller : BaseScreenInstaller<HomeScreenView>
+    public class LoadingOverlayInstaller : BaseScreenInstaller<LoadingOverlayView>
     {
         protected override async UniTask InitializeScreen(IEventBus eventBus, IServiceLocator serviceLocator)
         {
-            // there is a dependency
-            await UniTask.WaitUntil(() => serviceLocator.GameDesignService != null);
-
             await Screen.InitializeScreen(eventBus, serviceLocator);
             await Screen.HideScreen(true, true);
         }

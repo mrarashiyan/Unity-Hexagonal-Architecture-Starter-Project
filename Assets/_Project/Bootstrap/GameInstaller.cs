@@ -35,7 +35,12 @@ namespace Project.Bootstrap
             
         }
 
-        private async void Start()
+        private void Start()
+        {
+            Initialize().Forget();
+        }
+
+        private async UniTaskVoid Initialize()
         {
             Debug.Log($"[{nameof(GameInstaller)}] Install Started)");
             
@@ -47,9 +52,9 @@ namespace Project.Bootstrap
             
             await UniTask.WaitWhile(() => m_ServiceInstaller.InstallStatus != InstallStatus.Succeeded);
             await UniTask.WaitWhile(() => m_ScreenInstaller.InstallStatus != InstallStatus.Succeeded);
-            Debug.Log($"[{nameof(GameInstaller)}] Install Finished)");
+            Debug.Log($"[{nameof(GameInstaller)}] Install Finished");
             
-            PostProcess();
+            await PostProcess();
         }
 
         private void SetProgress(float progress)
@@ -57,9 +62,11 @@ namespace Project.Bootstrap
             m_ProgressSlider.value = progress;
         }
 
-        private void PostProcess()
+        private async UniTask PostProcess()
         {
-            _serviceLocator.UserInterface.ShowDefaultScreen();
+            await _serviceLocator.UserInterface.TransitionIn();
+            await _serviceLocator.UserInterface.ShowDefaultScreen();
+            await _serviceLocator.UserInterface.TransitionOut();
         }
     }
 }

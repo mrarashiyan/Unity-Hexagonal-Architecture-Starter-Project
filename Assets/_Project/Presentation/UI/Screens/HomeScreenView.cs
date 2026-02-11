@@ -43,6 +43,14 @@ namespace Project.Presentation.UI.Screens
             }
         }
 
+        protected override async UniTask AfterShowScreen()
+        {
+        }
+
+        protected override async UniTask BeforeHideScreen()
+        {
+        }
+
         protected override async UniTask AfterHideScreen()
         {
             while (_levelContainer.childCount > 0)

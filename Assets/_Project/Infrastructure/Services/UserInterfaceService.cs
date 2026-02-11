@@ -24,7 +24,7 @@ namespace Project.Infrastructure.Services
             _screens.Remove(screen.GetType());
         }
 
-        public void AddLoadingOverlay(IScreenView screen)
+        public void SetTransitionOverlay(IScreenView screen)
         {
             _loadingOverlay = screen;
         }
@@ -53,7 +53,7 @@ namespace Project.Infrastructure.Services
 
         public async UniTask SwitchScreen<TScreenType>(TScreenType from, TScreenType to) where TScreenType : Type
         {
-            await ShowLoadingOverlay();
+            await TransitionIn();
 
             if (from != null)
                 await HideScreen(from);
@@ -61,16 +61,16 @@ namespace Project.Infrastructure.Services
             if (to != null)
                 await ShowScreen(to);
 
-            await ShowLoadingOverlay();
+            await TransitionIn();
         }
 
-        public async UniTask ShowLoadingOverlay()
+        public async UniTask TransitionIn()
         {
             if (_loadingOverlay != null)
                 await _loadingOverlay.ShowScreen();
         }
 
-        public async UniTask HideLoadingOverlay()
+        public async UniTask TransitionOut()
         {
             if (_loadingOverlay != null)
                 await _loadingOverlay.HideScreen();

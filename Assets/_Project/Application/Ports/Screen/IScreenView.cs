@@ -6,7 +6,7 @@ namespace Project.Application.Ports.Screen
     public interface IScreenView
     {
         UniTask InitializeScreen(IEventBus eventBus, IServiceLocator serviceLocator);
-        public UniTask ShowScreen();
-        public UniTask HideScreen();
+        public UniTask ShowScreen(bool skipBeforeShow = false, bool skipAfterShow = false);
+        public UniTask HideScreen(bool skipBeforeHide = false, bool skipAfterHide = false);
     }
 }
