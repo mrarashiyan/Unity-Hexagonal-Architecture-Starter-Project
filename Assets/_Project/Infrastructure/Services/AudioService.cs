@@ -9,6 +9,9 @@ namespace Project.Infrastructure.Services
     public class AudioService : BaseService, IAudioService
     {
         private AudioMixer _audioMixer;
+        private const string MasterVolumeKey = "MasterVolume";
+        private const string MusicVolumeKey = "MusicVolume";
+        private const string SfxVolumeKey = "SfxVolume";
         protected override async UniTask InitializeService()
         {
             
@@ -21,22 +24,40 @@ namespace Project.Infrastructure.Services
 
         public void MuteAll()
         {
-            _audioMixer.SetFloat("MasterVolume", Mathf.NegativeInfinity);
+            _audioMixer.SetFloat(MasterVolumeKey, Mathf.NegativeInfinity);
         }
 
         public void UnmuteAll()
         {
-            _audioMixer.SetFloat("MasterVolume", 0);
+            _audioMixer.SetFloat(MasterVolumeKey, 0);
         }
 
         public void ToggleMusic(bool isMuted)
         {
-            _audioMixer.SetFloat("MusicVolume", isMuted ? Mathf.NegativeInfinity : 0);
+            _audioMixer.SetFloat(MusicVolumeKey, isMuted ? -80 : 0);
         }
 
         public void ToggleSFX(bool isMuted)
         {
-            _audioMixer.SetFloat("SfxVolume", isMuted ? Mathf.NegativeInfinity : 0);
+            _audioMixer.SetFloat(SfxVolumeKey, isMuted ? -80 : 0);
+        }
+
+        public bool IsMasterMute()
+        {
+            _audioMixer.GetFloat(MasterVolumeKey,out float value);
+            return value < 0;
+        }
+
+        public bool IsMusicMute()
+        {
+            _audioMixer.GetFloat(MusicVolumeKey,out float value);
+            return value < 0;
+        }
+
+        public bool IsSfxMute()
+        {
+            _audioMixer.GetFloat(SfxVolumeKey,out float value);
+            return value < 0;
         }
     }
 }

@@ -12,7 +12,6 @@ namespace Project.Bootstrap.ScreenInstallers.Screens
         protected override async UniTask InitializeScreen(IEventBus eventBus, IServiceLocator serviceLocator)
         {
             await Screen.InitializeScreen(eventBus, serviceLocator);
-            await Screen.HideScreen(true, true);
         }
     }
 }

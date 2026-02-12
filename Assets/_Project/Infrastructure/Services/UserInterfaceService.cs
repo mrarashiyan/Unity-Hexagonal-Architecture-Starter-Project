@@ -61,7 +61,7 @@ namespace Project.Infrastructure.Services
             if (to != null)
                 await ShowScreen(to);
 
-            await TransitionIn();
+            await TransitionOut();
         }
 
         public async UniTask TransitionIn()

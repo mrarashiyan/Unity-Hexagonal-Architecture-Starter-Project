@@ -28,16 +28,19 @@ namespace Project.Bootstrap.Base
             {
                 await InitializeScreen(eventBus, serviceLocator);
                 InstallStatus = InstallStatus.Succeeded;
+                
+                serviceLocator.UserInterface.AddScreen(_screenView);
+                
+                if (markAsDefaultScreen)
+                    serviceLocator.UserInterface.SetDefaultScreen(_screenView.GetType());
+
+                await Screen.HideScreen(true, true);
             }
             catch (Exception e)
             {
                 Debug.LogError($"[{GetType().Name}] Exception={e.Message} \nStack={e.StackTrace}");
                 InstallStatus = InstallStatus.Failed;
             }
-
-            serviceLocator.UserInterface.AddScreen(_screenView);
-            if (markAsDefaultScreen)
-                serviceLocator.UserInterface.SetDefaultScreen(_screenView.GetType());
 
             Debug.Log($"[{GetType().Name}] Initialize: Finished - Result: {InstallStatus}");
             return InstallStatus;
