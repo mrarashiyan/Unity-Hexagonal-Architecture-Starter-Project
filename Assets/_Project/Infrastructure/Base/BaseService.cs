@@ -1,6 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
-using Project.Infrastructure.Enums;
+using Project.Application.Ports.Services;
+using Project.Core.Enums;
 using UnityEngine;
 
 namespace Project.Infrastructure.Base

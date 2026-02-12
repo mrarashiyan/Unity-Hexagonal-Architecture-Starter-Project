@@ -1,6 +1,6 @@
 namespace Project.Application.Ports.Services
 {
-    public interface IAudioService
+    public interface IAudioService:IService
     {
         void MuteAll();
         void UnmuteAll();

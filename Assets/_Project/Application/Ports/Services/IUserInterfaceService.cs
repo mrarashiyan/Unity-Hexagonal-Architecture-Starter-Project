@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Project.Application.Ports.Services
 {
-    public interface IUserInterfaceService
+    public interface IUserInterfaceService:IService
     {
         public void AddScreen(IScreenView screen);
         public void RemoveScreen(IScreenView screen);

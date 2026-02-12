@@ -1,4 +1,4 @@
-namespace Project.Infrastructure.Enums
+namespace Project.Core.Enums
 {
     public enum ServiceInitializeStatus
     {
