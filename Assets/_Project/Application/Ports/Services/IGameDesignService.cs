@@ -2,7 +2,7 @@ using Project.Core.Data.GameDesignData;
 
 namespace Project.Application.Ports.Services
 {
-    public interface IGameDesignService
+    public interface IGameDesignService:IService
     {
         LevelData LevelData { get; }
     }

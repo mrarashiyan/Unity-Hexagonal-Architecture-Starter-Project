@@ -3,6 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Project.Application;
 using Project.Application.Ports.ServiceLocator;
+using Project.Application.Ports.Services;
 using Project.Bootstrap.Enums;
 using Project.Bootstrap.Interfaces;
 using Project.Infrastructure.Base;
@@ -10,7 +11,7 @@ using UnityEngine;
 
 namespace Project.Bootstrap.Base
 {
-    public abstract class BaseServiceInstaller<TService> : MonoBehaviour,IServiceInstaller where TService : BaseService
+    public abstract class BaseServiceInstaller<TService> : MonoBehaviour,IServiceInstaller where TService : IService
     {
         public TService Service { get; protected set; }
         public bool TimeoutCanBlockBoot { get; protected set; }

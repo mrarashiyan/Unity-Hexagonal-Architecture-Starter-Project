@@ -1,3 +1,4 @@
+using System;
 using Project.Application.Ports;
 using Project.Application.Ports.Services;
 
@@ -10,6 +11,8 @@ namespace Project.Application.Ports.ServiceLocator
         IUserInterfaceService UserInterface { get;}
         IStorageService StorageService { get;}
         IGameDesignService GameDesignService { get;}
-        void AddService<TService>(TService service);
+        ISceneManagement SceneManagement { get; }
+        public void AddService<T>(T service) where T : IService;
+        bool RemoveService(Type service);
     }
 }
