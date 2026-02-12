@@ -98,7 +98,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4596606231082625091
 RectTransform:
   m_ObjectHideFlags: 0
@@ -167,9 +167,9 @@ GameObject:
   - component: {fileID: 7033247289870477243}
   - component: {fileID: 5767529237580975297}
   - component: {fileID: 1475736365196078060}
-  - component: {fileID: 5089157953216715168}
+  - component: {fileID: 6937382116430550744}
   m_Layer: 5
-  m_Name: Btn_Volume
+  m_Name: Toggle_Mute
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -233,7 +233,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5089157953216715168
+--- !u!114 &6937382116430550744
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -242,9 +242,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2931936444426479913}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Toggle
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -274,9 +274,13 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1475736365196078060}
-  m_OnClick:
+  toggleTransition: 1
+  graphic: {fileID: 5600605865743938648}
+  m_Group: {fileID: 0}
+  onValueChanged:
     m_PersistentCalls:
       m_Calls: []
+  m_IsOn: 0
 --- !u!1 &3617068271759025204
 GameObject:
   m_ObjectHideFlags: 0
@@ -835,6 +839,8 @@ MonoBehaviour:
   - {fileID: 1446792919685844086, guid: 47b60646fe68d4bf09178f1a9d8987ac, type: 3}
   - {fileID: -8586417740124189794, guid: 7b5566d6a7fa54b6ca6cdfc57dabb66c, type: 3}
   - {fileID: -1783808350427418317, guid: a01a32beeb95340d7bab5a35a0c0b362, type: 3}
+  _muteToggle: {fileID: 6937382116430550744}
+  _settingsButton: {fileID: 2911968441054180206}
 --- !u!224 &6916347527992046788 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7922916384088426451, guid: 80630190134d14d7490de12483e74911, type: 3}

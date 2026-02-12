@@ -16,17 +16,23 @@ namespace Project.Presentation.UI.Screens.Home
         private readonly IHomeScreenView _view;
         private readonly IGameDesignService _gameDesignService;
         private readonly ILoadLevelUseCase _loadLevelUseCase;
+        private readonly IAudioService _audioService;
+        private readonly IUserInterfaceService _userInterfaceService;
 
         private HomeScreenViewModel _viewModel;
 
         public HomeScreenPresenter(
             IHomeScreenView view,
             IGameDesignService gameDesignService,
-            ILoadLevelUseCase loadLevelUseCase)
+            ILoadLevelUseCase loadLevelUseCase,
+            IAudioService audioService,
+            IUserInterfaceService userInterfaceService)
         {
             _view = view ?? throw new ArgumentNullException(nameof(view));
             _gameDesignService = gameDesignService ?? throw new ArgumentNullException(nameof(gameDesignService));
             _loadLevelUseCase = loadLevelUseCase ?? throw new ArgumentNullException(nameof(loadLevelUseCase));
+            _audioService = audioService ?? throw new ArgumentNullException(nameof(audioService));
+            _userInterfaceService = userInterfaceService ?? throw new ArgumentNullException(nameof(userInterfaceService));
         }
 
         /// <summary>
@@ -35,7 +41,7 @@ namespace Project.Presentation.UI.Screens.Home
         public async UniTask InitializeAsync()
         {
             await CreateViewModelAsync();
-            _view.DisplayLevels(_viewModel);
+            _view.UpdateUI(_viewModel);
         }
 
         /// <summary>
@@ -69,8 +75,25 @@ namespace Project.Presentation.UI.Screens.Home
                 ));
             }
 
-            _viewModel = new HomeScreenViewModel(levelData.LevelCount, levels);
+            _viewModel = new HomeScreenViewModel(levelData.LevelCount, levels, _audioService.IsMasterMute());
             await UniTask.CompletedTask;
+        }
+
+        public void ToggleAudioMute(bool value)
+        {
+            if (value)
+            {
+                _audioService.MuteAll();
+            }
+            else
+            {
+                _audioService.UnmuteAll();
+            }
+        }
+
+        public void SwitchToSettingsScreen()
+        {
+            //_userInterfaceService.SwitchScreen(_view, ..);
         }
     }
 }

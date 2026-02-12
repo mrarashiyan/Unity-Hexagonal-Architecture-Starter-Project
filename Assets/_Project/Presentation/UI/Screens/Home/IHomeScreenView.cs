@@ -10,11 +10,14 @@ namespace Project.Presentation.UI.Screens.Home
         /// <summary>
         /// Display the levels from ViewModel.
         /// </summary>
-        void DisplayLevels(HomeScreenViewModel viewModel);
-
+        void UpdateUI(HomeScreenViewModel viewModel);
+        
         /// <summary>
         /// Clear all level buttons.
         /// </summary>
         void ClearLevels();
+
+        void ToggleAudioMuteIcon(bool isMuted);
+        void NavigateToSettingsScreen();
     }
 }

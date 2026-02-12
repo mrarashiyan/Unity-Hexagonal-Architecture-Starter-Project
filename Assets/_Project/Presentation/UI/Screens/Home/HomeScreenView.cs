@@ -7,8 +7,9 @@ using Project.Presentation._Project.Presentation.UI.Widgets;
 using Project.Presentation.UI.Screens.Base;
 using Project.Presentation.UI.Screens.Home;
 using UnityEngine;
+using UnityEngine.UI;
 
-namespace Project.Presentation.UI.Screens
+namespace Project.Presentation.UI.Screens.Home
 {
     /// <summary>
     /// Passive View for Home Screen. Only handles Unity-specific UI operations.
@@ -18,9 +19,23 @@ namespace Project.Presentation.UI.Screens
         [SerializeField] private LevelSelectButtonView _levelSelectButtonPrefab;
         [SerializeField] private Transform _levelContainer;
         [SerializeField] private Sprite[] _levelImages;
+        [SerializeField] private Toggle _muteToggle;
+        [SerializeField] private Button _settingsButton;
+        
 
         private HomeScreenPresenter _presenter;
         private readonly List<LevelSelectButtonView> _activeButtons = new();
+
+        private void OnEnable()
+        {
+            _muteToggle.onValueChanged.AddListener(OnMuteTogglePressed);
+        }
+
+        private void OnDisable()
+        {
+            _muteToggle.onValueChanged.RemoveListener(OnMuteTogglePressed);
+            
+        }
 
         public void BindPresenter(HomeScreenPresenter presenter)
         {
@@ -58,9 +73,11 @@ namespace Project.Presentation.UI.Screens
 
         // IHomeScreenView Implementation
 
-        public void DisplayLevels(HomeScreenViewModel viewModel)
+        public void UpdateUI(HomeScreenViewModel viewModel)
         {
             ClearLevels();
+            
+            ToggleAudioMuteIcon(viewModel.IsAudioMute);
 
             foreach (var level in viewModel.Levels)
             {
@@ -92,9 +109,24 @@ namespace Project.Presentation.UI.Screens
             _activeButtons.Clear();
         }
 
+        public void ToggleAudioMuteIcon(bool isMuted)
+        {
+            _muteToggle.SetIsOnWithoutNotify(isMuted);
+        }
+
+        public void NavigateToSettingsScreen()
+        {
+            _presenter.SwitchToSettingsScreen();
+        }
+
         private async void OnLevelButtonClicked(int levelIndex)
         {
             await _presenter.OnLevelSelectedAsync(levelIndex);
+        }
+        
+        private void OnMuteTogglePressed(bool value)
+        {
+            _presenter.ToggleAudioMute(value);
         }
     }
 }

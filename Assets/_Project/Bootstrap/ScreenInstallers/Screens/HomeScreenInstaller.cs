@@ -29,7 +29,9 @@ namespace Project.Bootstrap.ScreenInstallers.Screens
             var presenter = new HomeScreenPresenter(
                 Screen,
                 serviceLocator.GameDesignService,
-                loadLevelUseCase);
+                loadLevelUseCase,
+                serviceLocator.AudioService,
+                serviceLocator.UserInterface);
 
             // Inject presenter into view
             Screen.BindPresenter(presenter);

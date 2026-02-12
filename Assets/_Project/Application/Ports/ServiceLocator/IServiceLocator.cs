@@ -12,6 +12,7 @@ namespace Project.Application.Ports.ServiceLocator
         IStorageService StorageService { get;}
         IGameDesignService GameDesignService { get;}
         ISceneManagement SceneManagement { get; }
+        IAudioService AudioService { get; }
         public void AddService<T>(T service) where T : IService;
         bool RemoveService(Type service);
     }

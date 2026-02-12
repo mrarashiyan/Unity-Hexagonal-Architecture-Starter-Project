@@ -21,6 +21,7 @@ namespace Project.Infrastructure.ServiceLocator
         public IUserInterfaceService UserInterface => TryGetService<IUserInterfaceService>();
         public IStorageService StorageService => TryGetService<IStorageService>();
         public IGameDesignService GameDesignService => TryGetService<IGameDesignService>();
+        public IAudioService AudioService => TryGetService<IAudioService>();
 
         private Dictionary<Type, IService> _services = new();
 

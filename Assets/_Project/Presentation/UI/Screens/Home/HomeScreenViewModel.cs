@@ -11,11 +11,13 @@ namespace Project.Presentation.UI.Screens.Home
     {
         public int LevelCount { get; }
         public IReadOnlyList<LevelItemModel> Levels { get; }
+        public bool IsAudioMute { get; }
 
-        public HomeScreenViewModel(int levelCount, IReadOnlyList<LevelItemModel> levels)
+        public HomeScreenViewModel(int levelCount, IReadOnlyList<LevelItemModel> levels, bool isAudioMute)
         {
             LevelCount = levelCount;
             Levels = levels ?? throw new ArgumentNullException(nameof(levels));
+            IsAudioMute = isAudioMute;
         }
     }
 
