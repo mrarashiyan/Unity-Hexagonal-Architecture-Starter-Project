@@ -9,6 +9,6 @@ namespace Project.Config.Installer
         public GameObject StorageInstaller;
         public GameObject GameDesignInstaller;
         public GameObject UserInterfaceInstaller;
-        public GameObject SceneManagementInstaller;
+        public GameObject AudioInstaller;
     }
 }

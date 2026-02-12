@@ -34,8 +34,8 @@ namespace Project.Bootstrap.ServiceInstallers
             var dummyInstaller = await Instantiate<DummyInstaller>(m_ServicesInstallLocator.DummyInstaller);
             var storageInstaller = await Instantiate<StorageInstaller>(m_ServicesInstallLocator.StorageInstaller);
             var userInterfaceInstaller = await Instantiate<UserInterfaceInstaller>(m_ServicesInstallLocator.UserInterfaceInstaller);
-            var gameDesignInstaller =
-                await Instantiate<GameDesignInstaller>(m_ServicesInstallLocator.GameDesignInstaller);
+            var gameDesignInstaller = await Instantiate<GameDesignInstaller>(m_ServicesInstallLocator.GameDesignInstaller);
+            var audioInstaller = await Instantiate<AudioInstaller>(m_ServicesInstallLocator.AudioInstaller);
 
             //set dependencies
 
@@ -45,6 +45,7 @@ namespace Project.Bootstrap.ServiceInstallers
             storageInstaller.Initialize(eventBus, serviceLocator).Forget();
             gameDesignInstaller.Initialize(eventBus, serviceLocator).Forget();
             userInterfaceInstaller.Initialize(eventBus, serviceLocator).Forget();
+            audioInstaller.Initialize(eventBus, serviceLocator).Forget();
 
             ReportProgress(100);
 
