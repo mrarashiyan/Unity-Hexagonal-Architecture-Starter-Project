@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using Project.Application.Ports.ServiceLocator;
 using Project.Application.Ports.Services;
 using Project.Application.UseCases.Level;
+using Project.Presentation.UI.Screens.Settings;
 
 namespace Project.Presentation.UI.Screens.Home
 {
@@ -32,7 +33,8 @@ namespace Project.Presentation.UI.Screens.Home
             _gameDesignService = gameDesignService ?? throw new ArgumentNullException(nameof(gameDesignService));
             _loadLevelUseCase = loadLevelUseCase ?? throw new ArgumentNullException(nameof(loadLevelUseCase));
             _audioService = audioService ?? throw new ArgumentNullException(nameof(audioService));
-            _userInterfaceService = userInterfaceService ?? throw new ArgumentNullException(nameof(userInterfaceService));
+            _userInterfaceService =
+                userInterfaceService ?? throw new ArgumentNullException(nameof(userInterfaceService));
         }
 
         /// <summary>
@@ -71,7 +73,7 @@ namespace Project.Presentation.UI.Screens.Home
                     levelIndex: i,
                     spriteIndex: i,
                     isLocked: false, // TODO: Implement unlock logic based on save data
-                    highScore: 0       // TODO: Load from save data
+                    highScore: 0 // TODO: Load from save data
                 ));
             }
 
@@ -93,7 +95,7 @@ namespace Project.Presentation.UI.Screens.Home
 
         public void SwitchToSettingsScreen()
         {
-            //_userInterfaceService.SwitchScreen(_view, ..);
+            _userInterfaceService.SwitchScreen(_view.GetType(), typeof(SettingsScreenView));
         }
     }
 }

@@ -15,3 +15,4 @@ MonoBehaviour:
   LoadingOverlay: {fileID: 1749109623816506682, guid: 0ca062e829f524107a6a64f0b00524aa, type: 3}
   DummyScreen: {fileID: 5277532653179247134, guid: 2e0f455e55cf5498aac47e03e8630a86, type: 3}
   HomeScreen: {fileID: 9046554236615980018, guid: 1ee44350180b341ff91f1c4a2bd12bdc, type: 3}
+  SettingsScreen: {fileID: 2339281610971056195, guid: acb3be39c4d1b4fc0862b3476170f0f1, type: 3}

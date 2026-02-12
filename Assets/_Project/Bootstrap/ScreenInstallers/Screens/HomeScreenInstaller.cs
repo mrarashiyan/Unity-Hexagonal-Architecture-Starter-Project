@@ -35,8 +35,6 @@ namespace Project.Bootstrap.ScreenInstallers.Screens
 
             // Inject presenter into view
             Screen.BindPresenter(presenter);
-
-            await Screen.HideScreen(true, true);
         }
     }
 }

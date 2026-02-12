@@ -37,6 +37,7 @@ namespace Project.Bootstrap.ScreenInstallers
             var loadingOverlay = await Instantiate<LoadingOverlayInstaller>(m_ScreenInstallLocator.LoadingOverlay);
             var dummyScreen = await Instantiate<DummyScreenInstaller>(m_ScreenInstallLocator.DummyScreen);
             var homeScreen = await Instantiate<HomeScreenInstaller>(m_ScreenInstallLocator.HomeScreen);
+            var settingsScreen = await Instantiate<SettingsScreenInstaller>(m_ScreenInstallLocator.SettingsScreen);
 
             //set dependencies
 
@@ -45,6 +46,7 @@ namespace Project.Bootstrap.ScreenInstallers
             loadingOverlay.Initialize(eventBus, serviceLocator).Forget();
             dummyScreen.Initialize(eventBus, serviceLocator).Forget();
             homeScreen.Initialize(eventBus, serviceLocator,true).Forget();
+            settingsScreen.Initialize(eventBus, serviceLocator).Forget();
 
             ReportProgress(100);
 

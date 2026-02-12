@@ -8,5 +8,6 @@ namespace Project.Config.Installer
         public GameObject LoadingOverlay;
         public GameObject DummyScreen;
         public GameObject HomeScreen;
+        public GameObject SettingsScreen;
     }
 }

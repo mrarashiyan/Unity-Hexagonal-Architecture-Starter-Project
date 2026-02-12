@@ -29,11 +29,13 @@ namespace Project.Presentation.UI.Screens.Home
         private void OnEnable()
         {
             _muteToggle.onValueChanged.AddListener(OnMuteTogglePressed);
+            _settingsButton.onClick.AddListener(NavigateToSettingsScreen);
         }
 
         private void OnDisable()
         {
             _muteToggle.onValueChanged.RemoveListener(OnMuteTogglePressed);
+            _settingsButton.onClick.RemoveListener(NavigateToSettingsScreen);
             
         }
 
