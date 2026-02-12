@@ -7,5 +7,8 @@ namespace Project.Application.Ports.Services
 
         void ToggleMusic(bool isMuted);
         void ToggleSFX(bool isMuted);
+        bool IsMasterMute();
+        bool IsMusicMute();
+        bool IsSfxMute();
     }
 }
